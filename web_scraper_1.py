@@ -11,11 +11,16 @@ soup = BS(response.text)
 print(soup.title)
 
 
-
+#<div class="content" itemprop="description">Girfriend...
 #<meta name="keywords" content="Girlfriend Tracker, Girlfriend Tracker for android, Girlfriend Tracker android download, Girlfriend Tracker apk, Girlfriend Tracker android apk, Girlfriend Tracker download">
 
-keywords = soup.find_all('meta')
-keywords2 = soup.find("meta",  property="keywords")
-#keywords = soup.find("meta",  name="keywords")
-#print(type(keywords[0]))
-print(keywords[0])
+all_meta= soup.find_all('meta')
+keywords = soup.findAll(attrs={"name":"keywords"}) 
+description = soup.findAll(attrs={"name":"description"})
+og_image = soup.findAll(attrs={"property":"og:image"})
+#internal_description = soup.findAll(attrs={"itemprop"="description"})
+print(keywords)
+print(description)
+print(og_image)
+#print(internal_description)
+print(soup.prettify())
