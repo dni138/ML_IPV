@@ -6,21 +6,21 @@ import requests
 url = 'https://apkpure.com/girlfriend-tracker-by-number/com.androidaplicativos.girlfriendtrackerpro'
 response = requests.get(url)
 
-soup = BS(response.text)
+soup = BS(response.text, "lxml")
 
-print(soup.title)
+#all_meta= soup.find_all('meta')
+title = soup.title
+titleText = title.get_text()
+keywords = soup.find(attrs={"name":"keywords"}) 
+description = soup.find(attrs={"name":"description"})
+description_body = soup.find("div", itemprop="description")
+og_image = soup.find(attrs={"property":"og:image"})
 
-
-#<div class="content" itemprop="description">Girfriend...
-#<meta name="keywords" content="Girlfriend Tracker, Girlfriend Tracker for android, Girlfriend Tracker android download, Girlfriend Tracker apk, Girlfriend Tracker android apk, Girlfriend Tracker download">
-
-all_meta= soup.find_all('meta')
-keywords = soup.findAll(attrs={"name":"keywords"}) 
-description = soup.findAll(attrs={"name":"description"})
-og_image = soup.findAll(attrs={"property":"og:image"})
-#internal_description = soup.findAll(attrs={"itemprop"="description"})
+print(titleText)
 print(keywords)
 print(description)
+print(description_body)
 print(og_image)
-#print(internal_description)
-print(soup.prettify())
+
+#print(soup.prettify())
+#print(soup.body)
