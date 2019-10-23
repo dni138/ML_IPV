@@ -35,29 +35,6 @@ for query in desired_google_queries:
     print(og_image)
     #print(search_res)
 
-'''url = 'https://apkpure.com/girlfriend-tracker-by-number/com.androidaplicativos.girlfriendtrackerpro'
-response = requests.get(url)
-
-soup = BS(response.text, "lxml")
-
-#getting Meta Title, Meta Description, Keywords, App Description, og_image
-title = soup.title
-titleText = title.get_text()
-keywords = soup.find(attrs={"name":"keywords"}) 
-description = soup.find(attrs={"name":"description"})
-description_body = soup.find("div", itemprop="description")
-<<<<<<< HEAD
-og_image = soup.find(attrs={"property":"og:image"})'''
-=======
-og_image = soup.find(attrs={"property":"og:image"})
-
-#print(titleText)
-#print(keywords)
-#print(description)
-#print(description_body)
-#print(og_image)
-#print(imgs)
-
 #getting screenshots
 screenshots = []
 for link in soup.findAll('a', {'class': 'mpopup'}):
@@ -85,7 +62,6 @@ def ocr_core(filename):
 
 text_from_screenshots = ocr_core("screenhot_girlfriend.jpg")
 print(ocr_core(text_from_screenshots))
->>>>>>> 8842f88b2b5ddbc31616acf237d5ed8448ca35a4
 
 #tesseract /Users/paulabarmaimon/Desktop/IPV/ML_IPV/screenhot_girlfriend.jpg out
 #im = Image.open("screenhot_girlfriend.jpg")
