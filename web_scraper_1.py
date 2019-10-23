@@ -14,14 +14,27 @@ for query in desired_google_queries:
     req = urllib.request.Request(url, headers={'User-Agent' : "Magic Browser"})
     response = urllib.request.urlopen( req )
     html = response.read()
-    print(html)
     # Parsing response
     soup = BS(html, 'html.parser')
     # Extracting number of results
-    resultStats = soup.find(id="resultStats").string
-    print(resultStats)
+    title = soup.title
+    titleText = title.get_text()
+    keywords = soup.find(attrs={"name":"keywords"}) 
+    description = soup.find(attrs={"name":"description"})
+    description_body = soup.find("div", itemprop="description")
+    og_image = soup.find(attrs={"property":"og:image"})
+    search_res = soup.find('div', id = 'search-res').find_all('a', href=True)
 
-url = 'https://apkpure.com/girlfriend-tracker-by-number/com.androidaplicativos.girlfriendtrackerpro'
+    for href in search_res:
+        print(href['href'])
+    print(titleText)
+    #print(keywords)
+    print(description)
+    print(description_body)
+    print(og_image)
+    #print(search_res)
+
+'''url = 'https://apkpure.com/girlfriend-tracker-by-number/com.androidaplicativos.girlfriendtrackerpro'
 response = requests.get(url)
 
 soup = BS(response.text, "lxml")
@@ -32,13 +45,7 @@ titleText = title.get_text()
 keywords = soup.find(attrs={"name":"keywords"}) 
 description = soup.find(attrs={"name":"description"})
 description_body = soup.find("div", itemprop="description")
-og_image = soup.find(attrs={"property":"og:image"})
-
-print(titleText)
-print(keywords)
-print(description)
-print(description_body)
-print(og_image)
+og_image = soup.find(attrs={"property":"og:image"})'''
 
 #print(soup.prettify())
 #print(soup.body)
