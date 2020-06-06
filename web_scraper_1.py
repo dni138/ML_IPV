@@ -45,7 +45,7 @@ def grab_info(soup_objects, appids):
     for soup_object, appid in zip(soup_objects, appids):
         data = {}
         data['title'] = soup_object.title.get_text()
-        data['keywords'] = soup_object.find(attrs={"name":"keywords"}) 
+        data['keywords'] = soup_object.find('meta', attrs={"name":"keywords"}) 
         data['description'] = soup_object.find(attrs={"name":"description"})
         data['description_body'] = soup_object.find("div", itemprop="description")
         data['og_image'] = soup_object.find(attrs={"property":"og:image"})
@@ -67,14 +67,16 @@ def ocr_core(filename):
     text = pytesseract.image_to_string(Image.open(filename))
     return text
 
+
+#Main method
 if __name__ == '__main__':
-    desired_queries = ['com.facebook.phone']
-    soup = parse_html_request(desired_queries, 'https://apkpure.com/search?q=')
+    desired_queries = ['com.facebook.phone'] #'com.androidaplicativos.girlfriendtrackerpro'
+    soup_list = parse_html_request(desired_queries, 'https://apkpure.com/search?q=')
     new_queries = []
-    for html_query, query in zip(soup, desired_queries):
-        search_res = html_query.find('div', id = 'search-res').find_all('a', href=True)
+    for soup_object, appid in zip(soup_list, desired_queries):
+        search_res = soup_object.find('div', id = 'search-res').find_all('a', href=True)
         for href in search_res:
-            if query in href['href']:
+            if appid in href['href']:
                 new_query = href['href']
                 break
         new_queries.append(new_query)
@@ -83,5 +85,4 @@ if __name__ == '__main__':
 
     data = grab_info(desired_soup, desired_queries)
 
-    print(data[0]['screenshots'])
-            
+    print(data[0]['description_body'])            
